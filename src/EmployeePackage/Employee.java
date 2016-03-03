@@ -61,7 +61,8 @@ public class Employee {
 
     @Override
     public String toString() {
-        return "Name: " + getName() + " ID: " + getId() + " Adress: " + getAddress();
+        return "Name: " + getName() + " | ID: " + getId() + " | Adress: " + getAddress() +
+                " | Total Salary: " + getTotalSalary() + " | Labor Union Subscription: " + (isLaborUnion() ? "Sim" : "Não");
     }
 
 

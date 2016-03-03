@@ -33,6 +33,6 @@ public class HourlyEmployee extends Employee {
 
     @Override
     public String toString() {
-        return super.toString() + " Hourly Salary: " + getHourlySalary();
+        return super.toString() + " | Hourly Salary: " + getHourlySalary();
     }
 }
