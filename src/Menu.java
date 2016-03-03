@@ -38,10 +38,10 @@ public class Menu implements PayrollConstants {
         System.out.println("3 - Add a Commissioned Employee");
         System.out.println("99 - Cancel");
 
-        int command = scan.nextInt();
+        int option = scan.nextInt();
         scan.nextLine();
 
-        if(command == ADD_HOURLY_EMPLOYEE || command == ADD_SALARIED_EMPLOYEE || command == ADD_COMMISSIONED_EMPLOYEE) {
+        if(option == ADD_HOURLY_EMPLOYEE || option == ADD_SALARIED_EMPLOYEE || option == ADD_COMMISSIONED_EMPLOYEE) {
             System.out.println("Enter the name:");
             name = scan.nextLine();
             System.out.println("Enter the address:");
@@ -50,7 +50,7 @@ public class Menu implements PayrollConstants {
             double salary = scan.nextDouble();
             Employee employee = null;
 
-            switch (command) {
+            switch (option) {
                 case ADD_HOURLY_EMPLOYEE:
                     employee = new HourlyEmployee(name, address, salary);
                     break;
@@ -64,7 +64,7 @@ public class Menu implements PayrollConstants {
                     break;
             }
             payroll.addEmployee(employee);
-        }else if(command == CANCEL){
+        }else if(option == CANCEL){
             System.out.println("Operation Canceled!");
         }else{
             System.out.println("Invalid command!");
