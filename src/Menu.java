@@ -15,17 +15,13 @@ public class Menu implements PayrollConstants {
 
     Scanner scan = new Scanner(System.in);
 
-    //Helper functions to minimize the duplicated code:
+    /* Helper function to minimize the duplicated code: */
+
     private int enterID(){
         System.out.println("Enter the ID:");
         int id = scan.nextInt();
         scan.nextLine();
         return id;
-    }
-
-    private String enterName(){
-        System.out.println("Enter the name:");
-        return scan.nextLine();
     }
     /*-----------------------------------------------*/
 
@@ -76,8 +72,7 @@ public class Menu implements PayrollConstants {
 
     private Payroll removeEmployeeMenu(Payroll payroll){
         System.out.println("The options are:");
-        System.out.println("1 - Remove employee using ID");
-        System.out.println("2 - Remove employee using name");
+        System.out.println("1 - Remove employee using his/her ID");
         System.out.println("99 - Cancel");
 
         int command = scan.nextInt();
@@ -85,9 +80,8 @@ public class Menu implements PayrollConstants {
 
         if (command == REMOVE_EMPLOYEE_BY_ID){
             System.out.println(payroll.removeEmployee(enterID()) ? "Removed Successfully" : "Employee not found");
-        }else if(command == REMOVE_EMPLOYEE_BY_NAME){
-            System.out.println(payroll.removeEmployee(enterName()) ? "Removed Successfully" : "Employee not found");
-        }else if(command == CANCEL){
+        }
+        else if(command == CANCEL){
             System.out.println("Operation Canceled!");
         }else{
             System.out.println("Invalid Command!");
@@ -98,8 +92,7 @@ public class Menu implements PayrollConstants {
     private Payroll registerTimecardMenu(Payroll payroll){
 
         System.out.println("The options are:");
-        System.out.println("1 - Register timecard using ID");
-        System.out.println("2 - Register timecard using name");
+        System.out.println("1 - Register timecard using employee's ID");
         System.out.println("99 - Cancel");
 
         int command = scan.nextInt();
@@ -108,12 +101,7 @@ public class Menu implements PayrollConstants {
         if(command == REGISTER_BY_ID){
             int ID = enterID();
             System.out.println("Enter the amount of hours to be registered:");
-            int timeCard = scan.nextInt();
-            payroll.registerTimeCard(ID, timeCard);
-        }else if(command == REGISTER_BY_NAME){
-            System.out.println("Enter the amount of hours to be registered:");
-            int timeCard = scan.nextInt();
-            payroll.registerTimeCard(enterName(), timeCard);
+            payroll.registerTimeCard(ID, scan.nextInt());
         }else if(command == CANCEL){
             System.out.println("Operation Canceled!");
         }else{
@@ -124,8 +112,7 @@ public class Menu implements PayrollConstants {
 
     private Payroll registerSaleResultMenu(Payroll payroll){
         System.out.println("The options are:");
-        System.out.println("1 - Register sale result using ID");
-        System.out.println("2 - Register sale result using name");
+        System.out.println("1 - Register sale result using employee's ID");
         System.out.println("99 - Cancel");
 
         int command = scan.nextInt();
@@ -134,12 +121,7 @@ public class Menu implements PayrollConstants {
         if(command == REGISTER_BY_ID){
             int ID = enterID();
             System.out.println("Enter the value of the sale result:");
-            double saleResult = scan.nextDouble();
-            payroll.registerSaleResult(ID, saleResult);
-        }else if(command == REGISTER_BY_NAME){
-            System.out.println("Enter the value of the sale result:");
-            double saleResult = scan.nextDouble();
-            payroll.registerSaleResult(enterName(), saleResult);
+            payroll.registerSaleResult(ID, scan.nextDouble());
         }else if(command == CANCEL){
             System.out.println("Operation Canceled!");
         }else{
@@ -152,8 +134,7 @@ public class Menu implements PayrollConstants {
     private Payroll registerServiceFeeMenu(Payroll payroll){
 
         System.out.println("The options are:");
-        System.out.println("1 - Register service fee using ID");
-        System.out.println("2 - Register service fee using name");
+        System.out.println("1 - Register service fee using employee's ID");
         System.out.println("99 - Cancel");
 
         int command = scan.nextInt();
@@ -162,12 +143,7 @@ public class Menu implements PayrollConstants {
         if(command == REGISTER_BY_ID){
             int ID = enterID();
             System.out.println("Enter the value of the service fee:");
-            double serviceFee = scan.nextDouble();
-            payroll.registerServiceFee(ID, serviceFee);
-        }else if(command == REGISTER_BY_NAME){
-            System.out.println("Enter the value of the service fee:");
-            double serviceFee = scan.nextDouble();
-            payroll.registerServiceFee(enterName(), serviceFee);
+            payroll.registerServiceFee(ID, scan.nextDouble());
         }else if(command == CANCEL){
             System.out.println("Operation Canceled!");
         }else{
@@ -178,8 +154,7 @@ public class Menu implements PayrollConstants {
 
     private Payroll changeEmployeeDetailsMenu(Payroll payroll){
         System.out.println("The options are:");
-        System.out.println("1 - Change details using ID");
-        System.out.println("2 - Change details using name");
+        System.out.println("1 - Change details using employee's ID");
         System.out.println("99 - Cancel");
 
         int command = scan.nextInt();
@@ -195,22 +170,22 @@ public class Menu implements PayrollConstants {
             System.out.println("6 - Change Labor Union fee");
             System.out.println("99 - Cancel");
 
+            int ID;
             int secondaryCommand = scan.nextInt();
             scan.nextLine();
-            int ID;
 
             switch (secondaryCommand){
                 case CHANGE_NAME:
                     ID = enterID();
                     System.out.println("Enter the new name:");
-                    String name = scan.nextLine();
-                    payroll.changeEmployeeName(ID, name);
+                    payroll.changeEmployeeName(ID, scan.nextLine());
                     break;
                 case CHANGE_ADDRESS:
                     ID = enterID();
                     System.out.println("Enter the new address");
-                    String address = scan.nextLine();
-                    payroll.changeEmployeeAddress(ID, address);
+                    payroll.changeEmployeeAddress(ID, scan.nextLine());
+                    break;
+                case CHANGE_PAYMENT_METHOD:
                     break;
                 case CHANGE_LABOR_UNION_SUBSCRIPTION:
                     ID = enterID();
@@ -218,6 +193,16 @@ public class Menu implements PayrollConstants {
                     System.out.println("1 - Subscribe\n2 - Unsubscribe");
                     int subscription = scan.nextInt();
                     payroll.changeLaborUnionSubscription(ID, subscription == 1);
+                    break;
+                case CHANGE_LABOR_UNION_ID:
+                    ID = enterID();
+                    System.out.println("Enter the new Labor Union ID:");
+                    payroll.changeLaborUnionID(ID, scan.nextInt());
+                    break;
+                case CHANGE_LABOR_UNION_FEE:
+                    ID = enterID();
+                    System.out.println("Enter the new Labor Union fee value");
+                    payroll.changeLaborUnionFee(ID, scan.nextDouble());
                     break;
                 case CANCEL:
                     System.out.println("Operation Canceled!");

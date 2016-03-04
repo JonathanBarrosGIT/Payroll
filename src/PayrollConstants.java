@@ -21,13 +21,8 @@ public interface PayrollConstants {
     int ADD_COMMISSIONED_EMPLOYEE = 3;
 
     int REMOVE_EMPLOYEE_BY_ID = 1;
-    int REMOVE_EMPLOYEE_BY_NAME = 2;
-
     int REGISTER_BY_ID = 1;
-    int REGISTER_BY_NAME = 2;
-
     int CHANGE_EMPLOYEE_BY_ID = 1;
-    int CHANGE_EMPLOYEE_BY_NAME = 2;
 
     int CHECK_BY_MAIL = 1;
     int CHECK_ON_HANDS = 2;
@@ -39,8 +34,5 @@ public interface PayrollConstants {
     int CHANGE_LABOR_UNION_SUBSCRIPTION = 4;
     int CHANGE_LABOR_UNION_ID = 5;
     int CHANGE_LABOR_UNION_FEE = 6;
-
-    int YES = 1;
-    int NO = 2;
 
 }

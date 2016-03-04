@@ -19,6 +19,6 @@ public class SalariedEmployee extends Employee {
 
     @Override
     public String toString() {
-        return super.toString() + " Monthly Salary: " + getMonthlySalary();
+        return super.toString() + " Monthly Salary: " + getMonthlySalary() + "\n";
     }
 }

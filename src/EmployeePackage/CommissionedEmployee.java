@@ -21,7 +21,7 @@ public class CommissionedEmployee extends Employee {
 
     @Override
     public String toString() {
-        return super.toString() + " Comission: " + getCommission();
+        return super.toString() + " Comission: " + getCommission() + "\n";
     }
 
     public void setTotalSalary(double saleResult){
