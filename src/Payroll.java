@@ -155,6 +155,18 @@ public class Payroll {
         return false;
     }
 
+    public boolean changePaymentMethod(int ID, int paymentMethod){
+        for(Employee employee : payrollList){
+            if(employee.getId() == ID) {
+                employee.setPaymentMethod(paymentMethod);
+                System.out.println("Payment Method changed successfully");
+                return true;
+            }
+        }
+        System.out.println("Employee not found!");
+        return false;
+    }
+
     @Override
     public String toString() {
         return payrollList.toString();

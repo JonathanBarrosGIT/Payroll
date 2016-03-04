@@ -191,6 +191,12 @@ public class Menu implements PayrollConstants {
                     payroll.changeEmployeeAddress(ID, scan.nextLine());
                     break;
                 case CHANGE_PAYMENT_METHOD:
+                    ID = enterID();
+                    System.out.println("What kind of payment method would you like to register?");
+                    System.out.println("1 - A Bank Check delivered by mail");
+                    System.out.println("2 - A Bank Check delivered on hands");
+                    System.out.println("3 - A Bank Deposit");
+                    payroll.changePaymentMethod(ID, scan.nextInt());
                     break;
                 case CHANGE_LABOR_UNION_SUBSCRIPTION:
                     ID = enterID();

@@ -117,4 +117,12 @@ public class Employee {
         return "\n" + "Name: " + getName() + " | ID: " + getId() + " | Adress: " + getAddress() +
                 " | Total Salary: " + getTotalSalary() + " | Labor Union Subscription: " + (isLaborUnion() ? "Sim" : "Não");
     }
+
+    public int getPaymentMethod() {
+        return paymentMethod;
+    }
+
+    public void setPaymentMethod(int paymentMethod) {
+        this.paymentMethod = paymentMethod;
+    }
 }
