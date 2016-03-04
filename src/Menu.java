@@ -44,21 +44,26 @@ public class Menu implements PayrollConstants {
             name = scan.nextLine();
             System.out.println("Enter the address:");
             address = scan.nextLine();
-            System.out.println("Enter the salary (Hourly or Monthly)");
-            double salary = scan.nextDouble();
+
             Employee employee = null;
 
             switch (option) {
                 case ADD_HOURLY_EMPLOYEE:
-                    employee = new HourlyEmployee(name, address, salary);
+                    System.out.println("Enter the hourly salary:");
+                    employee = new HourlyEmployee(name, address, scan.nextDouble());
+                    System.out.println("The employee " + name + " was added successfully!");
                     break;
                 case ADD_SALARIED_EMPLOYEE:
-                    employee = new SalariedEmployee(name, address, salary);
+                    System.out.println("Enter the monthly salary:");
+                    employee = new SalariedEmployee(name, address, scan.nextDouble());
+                    System.out.println("The employee " + name + " was added successfully!");
                     break;
                 case ADD_COMMISSIONED_EMPLOYEE:
+                    System.out.println("Enter the monthly salary:");
+                    double salary = scan.nextDouble();
                     System.out.println("For Commissioned Employee, please enter the commssion:");
-                    double comission = scan.nextDouble();
-                    employee = new CommissionedEmployee(name, address, salary, comission);
+                    employee = new CommissionedEmployee(name, address, salary, scan.nextDouble());
+                    System.out.println("The employee " + name + " was added successfully!");
                     break;
             }
             payroll.addEmployee(employee);
