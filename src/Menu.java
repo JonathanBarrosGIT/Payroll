@@ -3,6 +3,7 @@ import EmployeePackage.Employee;
 import EmployeePackage.HourlyEmployee;
 import EmployeePackage.SalariedEmployee;
 
+import java.text.NumberFormat;
 import java.util.*;
 
 /**
@@ -76,20 +77,28 @@ public class Menu implements PayrollConstants {
     }
 
     private Payroll removeEmployeeMenu(Payroll payroll){
-        System.out.println("The options are:");
-        System.out.println("1 - Remove employee using his/her ID");
-        System.out.println("99 - Cancel");
+        boolean loop = true;
+        while(loop){
+            try{
+                System.out.println("The options are:");
+                System.out.println("1 - Remove employee using his/her ID");
+                System.out.println("99 - Cancel");
 
-        int command = scan.nextInt();
-        scan.nextLine();
+                int command = Integer.parseInt(scan.next());
 
-        if (command == REMOVE_EMPLOYEE_BY_ID){
-            System.out.println(payroll.removeEmployee(enterID()) ? "Removed Successfully" : "Employee not found");
-        }
-        else if(command == CANCEL){
-            System.out.println("Operation Canceled!");
-        }else{
-            System.out.println("Invalid Command!");
+                if (command == REMOVE_EMPLOYEE_BY_ID){
+                    System.out.println(payroll.removeEmployee(enterID()) ? "Removed Successfully" : "Employee not found");
+                    loop = false;
+                }
+                else if(command == CANCEL){
+                    System.out.println("Operation Canceled!");
+                    loop = false;
+                }else{
+                    System.out.println("Invalid Command!");
+                }
+            }catch(NumberFormatException | InputMismatchException e){
+                System.out.println("Format invalid!");
+            }
         }
         return payroll;
     }
