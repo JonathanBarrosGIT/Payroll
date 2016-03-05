@@ -68,6 +68,7 @@ public class Menu implements PayrollConstants {
                             employee = new CommissionedEmployee(name, address, salary, scan.nextDouble());
                             System.out.println("The employee " + name + " was added successfully!");
                             break;
+                        //adada
                     }
                     loop = false;
                     payroll.addEmployee(employee);
