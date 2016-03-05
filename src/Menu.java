@@ -273,6 +273,7 @@ public class Menu implements PayrollConstants {
                     payroll = changeEmployeeDetailsMenu(payroll);
                     break;
                 case RUN_PAYROLL:
+                    //todo remember of entering the date to run the payroll in a different date
                     break;
                 case SHOW_EMPLOYEE_LIST:
                     System.out.println(payroll.toString());

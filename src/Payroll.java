@@ -3,6 +3,8 @@ import EmployeePackage.HourlyEmployee;
 import EmployeePackage.CommissionedEmployee;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by JonathanBarros on 2/29/16.
@@ -42,9 +44,7 @@ public class Payroll {
         for(Employee employee : payrollList){
             if(employee.getId() == ID){
                 if(employee instanceof HourlyEmployee){
-                    ((HourlyEmployee) employee).setTotalSalary(timeCard);
-                    System.out.println("Timecard registered successfully!");
-                    return true;
+                    return ((HourlyEmployee) employee).setTimeCardRegistrations(Calendar.getInstance(), timeCard);
                 } else{
                     System.out.println("The employee you entered is not an hourly employee.");
                     return false;
