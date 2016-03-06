@@ -1,18 +1,20 @@
 import EmployeePackage.Employee;
 import EmployeePackage.HourlyEmployee;
 import EmployeePackage.CommissionedEmployee;
+import EmployeePackage.SalariedEmployee;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
+import java.util.*;
+import java.util.function.Function;
 
 /**
  * Created by JonathanBarros on 2/29/16.
  *
  */
-public class Payroll {
+public class Payroll implements PayrollConstants{
 
     private ArrayList <Employee> payrollList;
+
+    Scanner scan = new Scanner(System.in);
 
     public Payroll() {
         payrollList = new ArrayList<>();
@@ -44,7 +46,7 @@ public class Payroll {
         for(Employee employee : payrollList){
             if(employee.getId() == ID){
                 if(employee instanceof HourlyEmployee){
-                    return ((HourlyEmployee) employee).setTimeCardRegistrations(Calendar.getInstance(), timeCard);
+                    return ((HourlyEmployee) employee).setTimeCardRecords(Calendar.getInstance(), timeCard);
                 } else{
                     System.out.println("The employee you entered is not an hourly employee.");
                     return false;
@@ -166,6 +168,110 @@ public class Payroll {
         System.out.println("Employee not found!");
         return false;
     }
+
+    /* ------- The following 4 methods were made in order to change the type of employee: ------- */
+
+    public HourlyEmployee changeToHourlyEmployee(Employee currentEmployee)
+            throws NumberFormatException,InputMismatchException{
+
+        Function<Employee, HourlyEmployee> toHourlyEmployee = employee1 -> {
+
+            System.out.println("Enter the hourly salary:");
+            double hourlySalary = scan.nextDouble();
+
+            HourlyEmployee newHourlyEmployee =
+                    new HourlyEmployee(employee1.getName(), employee1.getAddress(), hourlySalary);
+            newHourlyEmployee.setID(employee1.getId());
+
+            payrollList.remove(currentEmployee);
+            payrollList.add(newHourlyEmployee);
+
+            return newHourlyEmployee;
+        };
+
+        if(currentEmployee instanceof HourlyEmployee){
+            System.out.println("This employee is already an hourly employee.");
+        }else{
+            return toHourlyEmployee.apply(currentEmployee);
+        }
+        return null;
+    }
+
+    public SalariedEmployee changeToSalariedEmployee(Employee currentEmployee)
+            throws NumberFormatException,InputMismatchException{
+
+        Function<Employee, SalariedEmployee> toSalariedEmployee = employee1 -> {
+
+            System.out.println("Enter the monthly salary:");
+            double monthlySalary = scan.nextDouble();
+
+            SalariedEmployee newSalariedEmployee =
+                    new SalariedEmployee(employee1.getName(), employee1.getAddress(), monthlySalary);
+            newSalariedEmployee.setID(employee1.getId());
+
+            payrollList.remove(currentEmployee);
+            payrollList.add(newSalariedEmployee);
+
+            return newSalariedEmployee;
+        };
+
+        if(currentEmployee instanceof SalariedEmployee){
+            System.out.println("This employee is already a salaried employee.");
+        }else{
+            return toSalariedEmployee.apply(currentEmployee);
+        }
+        return null;
+    }
+
+    public CommissionedEmployee changeToCommissionedEmployee(Employee currentEmployee)
+            throws NumberFormatException,InputMismatchException{
+
+        Function<Employee, CommissionedEmployee> toCommissionedEmployee = employee1 -> {
+
+            System.out.println("Enter the monthly salary:");
+            double monthlySalary = scan.nextDouble();
+            System.out.println("For Commissioned Employee, please enter the commssion:");
+
+            CommissionedEmployee newCommissionedEmployee = new CommissionedEmployee(employee1.getName(),
+                                                                                    employee1.getAddress(),
+                                                                                    monthlySalary,
+                                                                                    scan.nextDouble());
+            newCommissionedEmployee.setID(employee1.getId());
+
+            payrollList.remove(currentEmployee);
+            payrollList.add(newCommissionedEmployee);
+
+            return newCommissionedEmployee;
+        };
+
+        if(currentEmployee instanceof SalariedEmployee){
+            System.out.println("This employee is already a salaried employee.");
+        }else{
+            return toCommissionedEmployee.apply(currentEmployee);
+        }
+        return null;
+    }
+
+    public boolean changeEmployeeType(int ID, int newEmployeeType){
+        for(Employee employee : payrollList){
+            if(employee.getId() == ID){
+                if(newEmployeeType == HOURLY_EMPLOYEE)
+                    return changeToHourlyEmployee(employee) != null;
+                else if(newEmployeeType == SALARIED_EMPLOYEE)
+                    return changeToSalariedEmployee(employee) != null;
+                else if(newEmployeeType == COMMISSIONED_EMPLOYEE)
+                    return changeToCommissionedEmployee(employee) != null;
+                else{
+                    System.out.println("Invalid Command!");
+                    return false;
+                }
+            }
+        }
+        System.out.println("Employee not found!");
+        return false;
+    }
+
+    /*--------------------------------------------------------------------------------------------*/
 
     @Override
     public String toString() {

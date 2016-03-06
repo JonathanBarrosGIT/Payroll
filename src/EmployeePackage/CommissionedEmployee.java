@@ -1,5 +1,8 @@
 package EmployeePackage;
 
+import java.util.Calendar;
+import java.util.HashMap;
+
 /**
  * Created by JonathanBarros on 2/29/16.
  *
@@ -7,29 +10,36 @@ package EmployeePackage;
 public class CommissionedEmployee extends Employee {
 
     private double monthlySalary;
-    private double commission;
+    private double commissionPercentage;
+    HashMap<Integer, Double> saleResults = new HashMap<>();
 
-    public CommissionedEmployee(String name, String address, double monthlySalary, double commission) {
+    public CommissionedEmployee(String name, String address, double monthlySalary, double commissionPercentage) {
         super(name, address);
-        this.commission = commission;
+        this.commissionPercentage = commissionPercentage;
         this.monthlySalary = monthlySalary;
     }
 
-    public double getCommission() {
-        return commission;
-    }
-
-    @Override
-    public String toString() {
-        return super.toString() + " Comission: " + getCommission() + "\n";
+    public double getCommissionPercentage() {
+        return commissionPercentage;
     }
 
     public void setTotalSalary(double saleResult){
         if(saleResult < 0){
             System.out.println("Invalid Entry");
         }else{
-            double comissionInDecimal = getCommission() / 100;
+            double comissionInDecimal = getCommissionPercentage() / 100;
             totalSalary += saleResult * comissionInDecimal;
         }
+    }
+
+   // public boolean setSaleResults(Calendar date, Double value){
+
+
+
+   // }
+
+    @Override
+    public String toString() {
+        return super.toString() + " Comission: " + getCommissionPercentage() + "\n";
     }
 }

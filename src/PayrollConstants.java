@@ -16,9 +16,9 @@ public interface PayrollConstants {
     int CANCEL = 99;
     int QUIT = 99;
 
-    int ADD_HOURLY_EMPLOYEE = 1;
-    int ADD_SALARIED_EMPLOYEE = 2;
-    int ADD_COMMISSIONED_EMPLOYEE = 3;
+    int HOURLY_EMPLOYEE = 1;
+    int SALARIED_EMPLOYEE = 2;
+    int COMMISSIONED_EMPLOYEE = 3;
 
     int REMOVE_EMPLOYEE_BY_ID = 1;
     int REGISTER_BY_ID = 1;
@@ -34,5 +34,6 @@ public interface PayrollConstants {
     int CHANGE_LABOR_UNION_SUBSCRIPTION = 4;
     int CHANGE_LABOR_UNION_ID = 5;
     int CHANGE_LABOR_UNION_FEE = 6;
+    int CHANGE_EMPLOYEE_TYPE = 7;
 
 }

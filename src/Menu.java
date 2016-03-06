@@ -2,7 +2,6 @@ import EmployeePackage.CommissionedEmployee;
 import EmployeePackage.Employee;
 import EmployeePackage.HourlyEmployee;
 import EmployeePackage.SalariedEmployee;
-import jdk.nashorn.internal.ir.WhileNode;
 
 import java.util.*;
 
@@ -12,37 +11,36 @@ import java.util.*;
  */
 public class Menu implements PayrollConstants {
 
-    public Menu() {
-    }
+    public Menu() {}
 
     Scanner scan = new Scanner(System.in);
-    boolean loop = true;
+
     /* Helper function to minimize the duplicated code: */
-
-    private int enterID() throws NumberFormatException, InputMismatchException{
+    private int enterID(){
         System.out.println("Enter the ID:");
-        return Integer.parseInt(scan.next());
-        //scan.nextLine();
-
+        int id = Integer.parseInt(scan.next());
+        scan.nextLine();
+        return id;
     }
-    /*-----------------------------------------------*/
 
     private Payroll addEmployeeMenu(Payroll payroll) {
-        loop = true;
+
+        boolean addEmployeeLoop = true;
         String name;
         String address;
-        while (loop) {
+
+        while (addEmployeeLoop) {
             try {
                 System.out.println("The options are:");
                 System.out.println("1 - Add an Hourly Employee");
                 System.out.println("2 - Add a Salaried Employee");
                 System.out.println("3 - Add a Commissioned Employee");
                 System.out.println("99 - Cancel");
+
                 int command = Integer.parseInt(scan.next());
+                scan.nextLine();
 
-                //scan.nextLine();
-
-                if (command == ADD_HOURLY_EMPLOYEE || command == ADD_SALARIED_EMPLOYEE || command == ADD_COMMISSIONED_EMPLOYEE) {
+                if (command == HOURLY_EMPLOYEE || command == SALARIED_EMPLOYEE || command == COMMISSIONED_EMPLOYEE) {
                     System.out.println("Enter the name:");
                     name = scan.nextLine();
                     System.out.println("Enter the address:");
@@ -51,46 +49,46 @@ public class Menu implements PayrollConstants {
                     Employee employee = null;
 
                     switch (command) {
-                        case ADD_HOURLY_EMPLOYEE:
+                        case HOURLY_EMPLOYEE:
                             System.out.println("Enter the hourly salary:");
                             employee = new HourlyEmployee(name, address, scan.nextDouble());
                             System.out.println("The employee " + name + " was added successfully!");
                             break;
-                        case ADD_SALARIED_EMPLOYEE:
+                        case SALARIED_EMPLOYEE:
                             System.out.println("Enter the monthly salary:");
                             employee = new SalariedEmployee(name, address, scan.nextDouble());
                             System.out.println("The employee " + name + " was added successfully!");
                             break;
-                        case ADD_COMMISSIONED_EMPLOYEE:
+                        case COMMISSIONED_EMPLOYEE:
                             System.out.println("Enter the monthly salary:");
                             double salary = scan.nextDouble();
                             System.out.println("For Commissioned Employee, please enter the commssion:");
                             employee = new CommissionedEmployee(name, address, salary, scan.nextDouble());
                             System.out.println("The employee " + name + " was added successfully!");
                             break;
-                        //adada
                     }
-                    loop = false;
+                    addEmployeeLoop = false;
                     payroll.addEmployee(employee);
+
                 } else if (command == CANCEL) {
                     System.out.println("Operation Canceled!");
-                    loop = false;
+                    addEmployeeLoop = false;
                 } else {
                     System.out.println("Invalid command!");
                 }
-
             } catch (NumberFormatException | InputMismatchException e) {
-                System.out.println("Format invalid!");
+                System.out.println("The format of the value you entered is invalid. Try the menu below once again:");
+                addEmployeeLoop = false;
             }
         }
         return payroll;
     }
 
-
-    //TODO verify duplicate notification(exceptions)
     private Payroll removeEmployeeMenu(Payroll payroll) {
-        loop = true;
-        while (loop) {
+
+        boolean removeLoop = true;
+
+        while (removeLoop) {
             try {
                 System.out.println("The options are:");
                 System.out.println("1 - Remove employee using his/her ID");
@@ -100,24 +98,24 @@ public class Menu implements PayrollConstants {
 
                 if (command == REMOVE_EMPLOYEE_BY_ID) {
                     System.out.println(payroll.removeEmployee(enterID()) ? "Removed Successfully" : "Employee not found");
-                    loop = false;
+                    removeLoop = false;
                 } else if (command == CANCEL) {
                     System.out.println("Operation Canceled!");
-                    loop = false;
+                    removeLoop = false;
                 } else {
                     System.out.println("Invalid Command!");
                 }
             } catch (NumberFormatException | InputMismatchException e) {
-                System.out.println("Format invalid!");
+                System.out.println("The format of the value you entered is invalid. Try the menu below once again:");
+                removeLoop = false;
             }
         }
         return payroll;
     }
 
-    //TODO Verify duplicate notification (exceptions)
     private Payroll registerTimecardMenu(Payroll payroll) {
-         loop = true;
-        while (loop) {
+        boolean registerTimeCardloop = true;
+        while (registerTimeCardloop) {
             try {
                 System.out.println("The options are:");
                 System.out.println("1 - Register timecard using employee's ID");
@@ -130,25 +128,26 @@ public class Menu implements PayrollConstants {
                     int ID = enterID();
                     System.out.println("Enter the amount of hours to be registered:");
                     payroll.registerTimeCard(ID, scan.nextInt());
-                    loop = false;
+                    registerTimeCardloop = false;
                 } else if (command == CANCEL) {
                     System.out.println("Operation Canceled!");
-                    loop = false;
+                    registerTimeCardloop = false;
                 } else {
                     System.out.println("Invalid command!");
                 }
             } catch (NumberFormatException | InputMismatchException e) {
-                System.out.println("Format invalid!");
+                System.out.println("The format of the value you entered is invalid. Try the menu below once again:");
+                registerTimeCardloop = false;
             }
         }
         return payroll;
     }
 
-    //TODO verify duplicate notification (exceptions)
     private Payroll registerSaleResultMenu(Payroll payroll) {
-        loop = true;
-        while (loop) {
 
+        boolean registerSaleResultLoop = true;
+
+        while (registerSaleResultLoop) {
             try {
                 System.out.println("The options are:");
                 System.out.println("1 - Register sale result using employee's ID");
@@ -161,25 +160,26 @@ public class Menu implements PayrollConstants {
                     int ID = enterID();
                     System.out.println("Enter the value of the sale result:");
                     payroll.registerSaleResult(ID, scan.nextDouble());
-                    loop = false;
+                    registerSaleResultLoop = false;
                 } else if (command == CANCEL) {
                     System.out.println("Operation Canceled!");
-                    loop = false;
+                    registerSaleResultLoop = false;
                 } else {
                     System.out.println("Invalid command!");
                 }
-
-
             } catch (NumberFormatException | InputMismatchException e) {
-                System.out.println("Format invalid!");
+                System.out.println("The format of the value you entered is invalid. Try the menu below once again:");
+                registerSaleResultLoop = false;
             }
         }
         return payroll;
     }
 
     private Payroll registerServiceFeeMenu(Payroll payroll) {
-        loop = true;
-        while (loop) {
+
+        boolean registerServiceFeeLoop = true;
+
+        while (registerServiceFeeLoop) {
             try {
                 System.out.println("The options are:");
                 System.out.println("1 - Register service fee using employee's ID");
@@ -192,45 +192,47 @@ public class Menu implements PayrollConstants {
                     int ID = enterID();
                     System.out.println("Enter the value of the service fee:");
                     payroll.registerServiceFee(ID, scan.nextDouble());
-                    loop = false;
+                    registerServiceFeeLoop = false;
                 } else if (command == CANCEL) {
                     System.out.println("Operation Canceled!");
-                    loop = false;
+                    registerServiceFeeLoop = false;
                 } else {
                     System.out.println("Invalid command!");
                 }
             } catch (NumberFormatException | InputMismatchException e) {
-                System.out.println("Format invalid!");
+                System.out.println("The format of the value you entered is invalid. Try the menu below once again:");
+                registerServiceFeeLoop = false;
             }
         }
         return payroll;
     }
 
-    //TODO verify duplicate notification (exceptions)
     private Payroll changeEmployeeDetailsMenu(Payroll payroll) {
-        loop = true;
 
-        while (loop) {
+        boolean changeEmployeeLoop = true;
+
+        while (changeEmployeeLoop) {
             try {
                 System.out.println("The options are:");
                 System.out.println("1 - Change details using employee's ID");
                 System.out.println("99 - Cancel");
+
                 int command = Integer.parseInt(scan.next());
-                //int command = scan.nextInt();
-                //scan.nextLine();
+                scan.nextLine();
 
                 if (command == CHANGE_EMPLOYEE_BY_ID) {
                     System.out.println("The options are:");
-                    System.out.println("1 - Change employee's name");
-                    System.out.println("2 - Change employee's address");
-                    System.out.println("3 - Change employee's payment method");
-                    System.out.println("4 - Change Labor Union subscription");
-                    System.out.println("5 - Change Labor Union identification");
-                    System.out.println("6 - Change Labor Union fee");
+                    System.out.println("1 - Change Employee's Name");
+                    System.out.println("2 - Change Employee's Address");
+                    System.out.println("3 - Change Employee's Payment Method");
+                    System.out.println("4 - Change Labor Union Subscription");
+                    System.out.println("5 - Change Labor Union Identification");
+                    System.out.println("6 - Change Labor Union Fee");
+                    System.out.println("7 - Change Employee Type");
                     System.out.println("99 - Cancel");
 
                     int ID;
-                    int secondaryCommand = scan.nextInt();
+                    int secondaryCommand = Integer.parseInt(scan.next());
                     scan.nextLine();
 
                     switch (secondaryCommand) {
@@ -269,6 +271,12 @@ public class Menu implements PayrollConstants {
                             System.out.println("Enter the new Labor Union fee value");
                             payroll.changeLaborUnionFee(ID, scan.nextDouble());
                             break;
+                        case CHANGE_EMPLOYEE_TYPE:
+                            ID = enterID();
+                            System.out.println("Enter the new type:");
+                            System.out.println("1 - Hourly Employee\n2 - Salaried Employee\n3 - Commissioned Employee");
+                            payroll.changeEmployeeType(ID, scan.nextInt());
+                            break;
                         case CANCEL:
                             System.out.println("Operation Canceled!");
                             break;
@@ -277,15 +285,18 @@ public class Menu implements PayrollConstants {
                             break;
 
                     }
-                    loop = false;
+
+                    changeEmployeeLoop = false;
+
                 } else if (command == CANCEL) {
                     System.out.println("Operation Canceled!");
-                    loop = false;
+                    changeEmployeeLoop = false;
                 } else {
                     System.out.println("Invalid Command!");
                 }
             } catch (NumberFormatException | InputMismatchException e) {
-                System.out.println("Format invalid!");
+                System.out.println("The format of the value you entered is invalid. Try the menu below once again:");
+                changeEmployeeLoop = false;
             }
         }
         return payroll;
@@ -293,9 +304,9 @@ public class Menu implements PayrollConstants {
 
     public void runMenu(Payroll payroll) {
 
-        loop = true;
+        boolean menuLoop = true;
 
-        while (loop) {
+        while (menuLoop) {
             try {
                 System.out.println("Main menu:");
                 System.out.println("Enter the number related to the option you want:");
@@ -313,7 +324,7 @@ public class Menu implements PayrollConstants {
 
                 switch (command) {
                     case QUIT:
-                        loop = false;
+                        menuLoop = false;
                         break;
                     case ADD_EMPLOYEE:
                         payroll = addEmployeeMenu(payroll);
@@ -340,9 +351,8 @@ public class Menu implements PayrollConstants {
                         System.out.println(payroll.toString());
                         break;
                 }
-
             }catch (NumberFormatException | InputMismatchException e) {
-                System.out.println("Format invalid!");
+                System.out.println("The format of the value you entered is invalid. Try the menu below once again:");
             }
         }
     }

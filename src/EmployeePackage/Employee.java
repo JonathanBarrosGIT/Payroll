@@ -67,6 +67,10 @@ public class Employee {
         return laborUnion;
     }
 
+    public void setID(int id){
+        this.id = id;
+    }
+
     public void setName(String name) {
         this.name = name;
     }

@@ -1,7 +1,6 @@
 package EmployeePackage;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 
 /**
@@ -14,8 +13,10 @@ public class HourlyEmployee extends Employee {
 
     /**
      * This HashMap is going to receive the following:
+     * An integer representing the day that the time card is going to be registered
+     * Another integer representing the amount of worked hours
      * */
-    private HashMap<Integer, Integer> timeCardRegistrations = new HashMap<>();
+    private HashMap<Integer, Integer> timeCardRecords = new HashMap<>();
 
     public HourlyEmployee(String name, String address, double hourlySalary) {
         super(name, address);
@@ -41,26 +42,25 @@ public class HourlyEmployee extends Employee {
         return hourlySalary;
     }
 
-    @Override
-    public String toString() {
-        return super.toString() + " | Hourly Salary: " + getHourlySalary() + "\n";
-    }
-
-    public boolean setTimeCardRegistrations(Calendar date, int timeCard) {
-
+    public boolean setTimeCardRecords(Calendar date, Integer timeCard) {
         if(timeCard < 0){
             System.out.println("Invalid entry. You cannot register a time card with less than 0 hour.");
             return false;
-        }else if(timeCardRegistrations.get(date.get(Calendar.DAY_OF_MONTH)) != null){
+        }else if(timeCardRecords.get(date.get(Calendar.DAY_OF_MONTH)) != null){
             System.out.println("You cannot have duplicated entries!");
             return false;
         }else{
-            timeCardRegistrations.put(date.get(Calendar.DAY_OF_MONTH), timeCard);
+            timeCardRecords.put(date.get(Calendar.DAY_OF_MONTH), timeCard);
             System.out.println(timeCard + " hours of work registered on "
                     + date.get(Calendar.DAY_OF_MONTH) + "/"
                     + (date.get(Calendar.MONTH) + 1) + "/"
                     + date.get(Calendar.YEAR) + " successfully!");
             return true;
         }
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + " | Hourly Salary: " + getHourlySalary() + "\n";
     }
 }
