@@ -133,9 +133,18 @@ public class Employee {
         this.paymentSchedule = paymentSchedule;
     }
 
+    public String printLaborUnion(){
+        if(isLaborUnion()){
+            return "\tSituation: Subscribed\n \tID: " + getLaborUnionID()+ "\n\tLabor Union Fee: " + getLaborUnionFee() +
+                    "\n\tService Fee: " + getServiceFee();
+        }else return "\tSituation: Not subscribed";
+    }
+
+
     @Override
     public String toString() {
-        return "\n" + "Name: " + getName() + " | ID: " + getId() + " | Adress: " + getAddress() +
-                " | Total Salary: " + getTotalSalary() + " | Labor Union Subscription: " + (isLaborUnion() ? "Sim" : "Não");
+        return "\n" + " Name: " + getName() +  "\n ID: " + getId() + "\n Adress: " + getAddress() +
+                /*"\n Total Salary: " + getTotalSalary() +*/
+                " \n Labor Union Information:\n" + printLaborUnion() + "\n Payment Method: " + getPaymentMethod() + "\n Payment Schedule:" + getPaymentSchedule();
     }
 }

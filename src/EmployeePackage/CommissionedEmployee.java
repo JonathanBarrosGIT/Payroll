@@ -51,6 +51,7 @@ public class CommissionedEmployee extends Employee {
 
     @Override
     public String toString() {
-        return super.toString() + " Comission: " + getCommissionPercentage() + "\n";
+        return super.toString() + " \n Comission: " + getCommissionPercentage() + "%" + "\n" +
+                "=====================================\n";
     }
 }
