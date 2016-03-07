@@ -23,18 +23,13 @@ public class HourlyEmployee extends Employee {
         this.hourlySalary = hourlySalary;
     }
 
-    //TODO See what to do with this method
     public void setTotalSalary(int timeCard) {
 
-        if(timeCard < 0){
-            System.out.println("Invalid entry");
-        }else {
-            if (timeCard > 8) {
-                int overtime = timeCard - 8;
-                totalSalary += (hourlySalary * 8 + (hourlySalary * 1.5 * overtime));
-            } else {
-                totalSalary = hourlySalary * timeCard;
-            }
+        if (timeCard > 8) {
+            int overtime = timeCard - 8;
+            totalSalary += (hourlySalary * 8 + (hourlySalary * 1.5 * overtime));
+        } else {
+            totalSalary = hourlySalary * timeCard;
         }
     }
 
@@ -55,6 +50,7 @@ public class HourlyEmployee extends Employee {
                     + date.get(Calendar.DAY_OF_MONTH) + "/"
                     + (date.get(Calendar.MONTH) + 1) + "/"
                     + date.get(Calendar.YEAR) + " successfully!");
+            setTotalSalary(timeCard);
             return true;
         }
     }

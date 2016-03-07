@@ -1,6 +1,4 @@
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.Vector;
 
 /**
@@ -21,9 +19,8 @@ public class PaymentSchedule  {
     public void setDaysOfPayment(String scheduleName){
 
         String[] splitScheduleName = scheduleName.split(" ");
-        Calendar marchCalendar = new GregorianCalendar(2016, 3, 1);
 
-        if(splitScheduleName[0].equals("mensal")){
+        if(splitScheduleName[0].equals("monthly")){
             if(splitScheduleName[1].equals("$")){
                 daysOfPayment.add(31);
             }
@@ -31,32 +28,34 @@ public class PaymentSchedule  {
                 daysOfPayment.add(Integer.parseInt(splitScheduleName[1]));
             }
         }
-        else if(splitScheduleName[0].equals("semanal")) {
+        else if(splitScheduleName[0].equals("weekly")) {
             int day = 1;
             switch (splitScheduleName[2]){
-                case "segunda":
+                case "monday":
                     day = 7;
                     break;
-                case "terca":
+                case "tuesday":
                     day = 1;
                     break;
-                case "quarta":
+                case "wednesday":
                     day = 2;
                     break;
-                case "quinta":
+                case "thursday":
                     day = 3;
                     break;
-                case "sexta":
+                case "friday":
                     day = 4;
                     break;
             }
 
             if(Integer.parseInt(splitScheduleName[1]) == 1){
                 int weekAdditional = 0;
-                for(int i = 0; i < 4; i++){
+
+                for(int i = (splitScheduleName[2].equals("friday") ? 1 : 0); i <= 4; i++){
                     daysOfPayment.add(day + weekAdditional);
                     weekAdditional += 7;
                 }
+
             }else if(Integer.parseInt(splitScheduleName[1]) == 2){
                 daysOfPayment.add(day);
                 daysOfPayment.add(day + 14);
@@ -70,7 +69,7 @@ public class PaymentSchedule  {
 
     @Override
     public String toString(){
-        return "Schedule Name: " + getScheduleName() + "\n" +
+        return "\nSchedule Name: " + getScheduleName() + "\n" +
                 "Days of Payment: " + daysOfPayment;
 
     }

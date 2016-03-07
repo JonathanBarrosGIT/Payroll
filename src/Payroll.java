@@ -14,10 +14,17 @@ public class Payroll implements PayrollConstants{
 
     private ArrayList <Employee> payrollList;
 
+    private ArrayList <PaymentSchedule> paymentSchedulesList;
+
     Scanner scan = new Scanner(System.in);
 
     public Payroll() {
         payrollList = new ArrayList<>();
+
+        paymentSchedulesList = new ArrayList<>();
+        paymentSchedulesList.add(new PaymentSchedule("monthly 4"));
+        paymentSchedulesList.add(new PaymentSchedule("monthly $"));
+        paymentSchedulesList.add(new PaymentSchedule("weekly 1 wednesday"));
     }
 
     public void addEmployee(Employee employee){
@@ -139,7 +146,7 @@ public class Payroll implements PayrollConstants{
             return false;
         else{
             for(Employee employee : payrollList){
-                if(employee.getId() == ID){
+                if(employee.getLaborUnionID() == ID){
                     return employee.setLaborUnionID(laborUnionID);
                 }
             }
@@ -150,7 +157,7 @@ public class Payroll implements PayrollConstants{
 
     public boolean changeLaborUnionFee(int ID, double newLaborUnionFee){
         for(Employee employee : payrollList){
-            if(employee.getId() == ID)
+            if(employee.getLaborUnionID() == ID)
                 return employee.setLaborUnionFee(newLaborUnionFee);
         }
         System.out.println("Employee not found!");
@@ -160,7 +167,17 @@ public class Payroll implements PayrollConstants{
     public boolean changePaymentMethod(int ID, int paymentMethod){
         for(Employee employee : payrollList){
             if(employee.getId() == ID) {
-                employee.setPaymentMethod(paymentMethod);
+                if(paymentMethod == CHECK_BY_MAIL){
+                    employee.setPaymentMethod("Check by email");
+                }else if(paymentMethod == CHECK_ON_HANDS){
+                    employee.setPaymentMethod("Check on hands");
+                }else if(paymentMethod == BANK_DEPOSIT){
+                    employee.setPaymentMethod("Bank Deposit");
+                }else{
+                    System.out.println("Payment Method Invalid!");
+                    return false;
+                }
+
                 System.out.println("Payment Method changed successfully");
                 return true;
             }
@@ -271,10 +288,39 @@ public class Payroll implements PayrollConstants{
         return false;
     }
 
+    public boolean createNewPaymentSchedule(String paymentScheduleName){
+        for(PaymentSchedule paymentSchedule : paymentSchedulesList){
+            if(paymentSchedule.getScheduleName().equals(paymentScheduleName)){
+                System.out.println("The name you entered already exists. Try another one!");
+                return false;
+            }
+        }
+        PaymentSchedule paymentSchedule = new PaymentSchedule(paymentScheduleName);
+        paymentSchedulesList.add(paymentSchedule);
+        System.out.println("Payment Schedule created successfully!");
+        return true;
+    }
+
+    public void runPayrol(int day){
+        for (Employee employee : payrollList){
+
+
+        }
+
+
+    }
+
     /*--------------------------------------------------------------------------------------------*/
 
-    @Override
-    public String toString() {
-        return payrollList.toString();
+    public void printListOfEmployees() {
+        for(Employee employee : payrollList){
+            System.out.println(employee.toString());
+        }
+    }
+
+    public void printListOfPaymentSchedules(){
+        for(PaymentSchedule paymentSchedule : paymentSchedulesList){
+            System.out.println(paymentSchedule.getScheduleName());
+        }
     }
 }

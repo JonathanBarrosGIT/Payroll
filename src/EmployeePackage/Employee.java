@@ -22,7 +22,7 @@ public class Employee {
 
     protected double totalSalary = 0;
 
-    private int paymentMethod;
+    private String paymentMethod;
     private String paymentSchedule;
 
     public Employee(String name, String address){
@@ -117,11 +117,11 @@ public class Employee {
         }
     }
 
-    public int getPaymentMethod() {
+    public String getPaymentMethod() {
         return paymentMethod;
     }
 
-    public void setPaymentMethod(int paymentMethod) {
+    public void setPaymentMethod(String paymentMethod) {
         this.paymentMethod = paymentMethod;
     }
 
@@ -135,16 +135,22 @@ public class Employee {
 
     public String printLaborUnion(){
         if(isLaborUnion()){
-            return "\tSituation: Subscribed\n \tID: " + getLaborUnionID()+ "\n\tLabor Union Fee: " + getLaborUnionFee() +
+            return "\tSituation: Subscribed\n \tID: " + getLaborUnionID()+
+                    "\n\tLabor Union Fee: " + getLaborUnionFee() +
                     "\n\tService Fee: " + getServiceFee();
-        }else return "\tSituation: Not subscribed";
+        }else
+            return "\tSituation: Not subscribed";
     }
 
 
     @Override
     public String toString() {
-        return "\n" + " Name: " + getName() +  "\n ID: " + getId() + "\n Adress: " + getAddress() +
-                /*"\n Total Salary: " + getTotalSalary() +*/
-                " \n Labor Union Information:\n" + printLaborUnion() + "\n Payment Method: " + getPaymentMethod() + "\n Payment Schedule:" + getPaymentSchedule();
+        return "\n Name: " + getName() +
+                "\n ID: " + getId() +
+                "\n Adress: " + getAddress() +
+                "\n Labor Union Information:\n" + printLaborUnion() +
+                "\n Payment Method: " + (getPaymentMethod() != null ? getPaymentMethod() : "Not yet") +
+                "\n Payment Schedule: " + getPaymentSchedule();
     }
 }
+

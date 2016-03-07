@@ -12,6 +12,8 @@ public interface PayrollConstants {
     int CHANGE_EMPLOYEE_DETAILS = 6;
     int RUN_PAYROLL = 7;
     int SHOW_EMPLOYEE_LIST = 8;
+    int CREATE_NEW_PAYMENT_SCHEDULE = 9;
+    int SHOW_PAYMENT_SCHEDULES = 10;
 
     int CANCEL = 99;
     int QUIT = 99;

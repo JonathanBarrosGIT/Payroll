@@ -15,14 +15,14 @@ public class Menu implements PayrollConstants {
 
     //TODO
 
-    public PaymentSchedule paymentSchedule = new PaymentSchedule("mensal 4");
-    public PaymentSchedule paymentSchedule1 = new PaymentSchedule("mensal $");
-    public PaymentSchedule paymentSchedule2 = new PaymentSchedule("semanal 2 segunda");
+    //public PaymentSchedule paymentSchedule = new PaymentSchedule("monthly 4");
+    //public PaymentSchedule paymentSchedule1 = new PaymentSchedule("monthly $");
+    //public PaymentSchedule paymentSchedule2 = new PaymentSchedule("weekly 1 wednesday");
 
     Scanner scan = new Scanner(System.in);
 
     /* Helper function to minimize the duplicated code: */
-    private int enterID() {
+    private int enterID() throws NumberFormatException, InputMismatchException{
         System.out.println("Enter the ID:");
         int id = Integer.parseInt(scan.next());
         scan.nextLine();
@@ -58,13 +58,13 @@ public class Menu implements PayrollConstants {
                         case HOURLY_EMPLOYEE:
                             System.out.println("Enter the hourly salary:");
                             employee = new HourlyEmployee(name, address, scan.nextDouble());
-                            employee.setPaymentSchedule("semanal 1 sexta");
+                            employee.setPaymentSchedule("weekly 1 friday");
                             System.out.println("The employee " + name + " was added successfully!");
                             break;
                         case SALARIED_EMPLOYEE:
                             System.out.println("Enter the monthly salary:");
                             employee = new SalariedEmployee(name, address, scan.nextDouble());
-                            employee.setPaymentSchedule("mensal $");
+                            employee.setPaymentSchedule("monthly $");
                             System.out.println("The employee " + name + " was added successfully!");
                             break;
                         case COMMISSIONED_EMPLOYEE:
@@ -72,7 +72,7 @@ public class Menu implements PayrollConstants {
                             double salary = scan.nextDouble();
                             System.out.println("For Commissioned Employee, please enter the commssion:");
                             employee = new CommissionedEmployee(name, address, salary, scan.nextDouble());
-                            employee.setPaymentSchedule("semanal 2 sexta");
+                            employee.setPaymentSchedule("weekly 2 friday");
                             System.out.println("The employee " + name + " was added successfully!");
                             break;
                     }
@@ -311,6 +311,27 @@ public class Menu implements PayrollConstants {
         return payroll;
     }
 
+    private Payroll createNewPaymentSchedule(Payroll payroll){
+
+        System.out.println("Some examples of payment schedules:");
+        System.out.println("- weekly 1 thursday for payment every week on thursdays");
+        System.out.println("- monthly 10 for payment every month in the day 10");
+        System.out.println("Now, enter your the payment schedule name:");
+
+        String scheduleName = scan.nextLine();
+        payroll.createNewPaymentSchedule(scheduleName);
+
+        return payroll;
+    }
+
+    private void runPayroll(Payroll payroll){
+        System.out.println("Enter the day you want to run the payroll:");
+        int day = Integer.parseInt(scan.next());
+        scan.nextLine();
+
+        payroll.runPayrol(day);
+    }
+
     public void runMenu(Payroll payroll) {
 
         boolean menuLoop = true;
@@ -326,11 +347,13 @@ public class Menu implements PayrollConstants {
                 System.out.println("4 - Register a sale result");
                 System.out.println("5 - Register a service fee");
                 System.out.println("6 - Change the employee details");
-                //System.out.println("7 - Run payroll for today");
+                System.out.println("7 - Run payroll");
                 System.out.println("8 - Show list of employees");
+                System.out.println("9 - Create Payment Schedule");
+                System.out.println("10 - Show Available Payment Schedule");
                 System.out.println("99 - Quit");
                 int command = Integer.parseInt(scan.next());
-                //int command = scan.nextInt();
+                scan.nextLine();
 
                 switch (command) {
                     case QUIT:
@@ -355,14 +378,21 @@ public class Menu implements PayrollConstants {
                         payroll = changeEmployeeDetailsMenu(payroll);
                         break;
                     case RUN_PAYROLL:
+                        runPayroll(payroll);
                         //TODO
-                        System.out.println(paymentSchedule.toString());
-                        System.out.println(paymentSchedule1.toString());
-                        System.out.println(paymentSchedule2.toString());
+                        //System.out.println(paymentSchedule.toString());
+                        //System.out.println(paymentSchedule1.toString());
+                        //System.out.println(paymentSchedule2.toString());
                         //todo remember of entering the date to run the payroll in a different date
                         break;
+                    case CREATE_NEW_PAYMENT_SCHEDULE:
+                        payroll = createNewPaymentSchedule(payroll);
+                        break;
+                    case SHOW_PAYMENT_SCHEDULES:
+                        payroll.printListOfPaymentSchedules();
+                        break;
                     case SHOW_EMPLOYEE_LIST:
-                        System.out.println(payroll.toString());
+                        payroll.printListOfEmployees();
                         break;
                 }
             } catch (NumberFormatException | InputMismatchException e) {
