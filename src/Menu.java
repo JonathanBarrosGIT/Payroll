@@ -318,9 +318,12 @@ public class Menu implements PayrollConstants {
         System.out.println("- monthly 10 for payment every month in the day 10");
         System.out.println("Now, enter your the payment schedule name:");
 
-        String scheduleName = scan.nextLine();
-        payroll.createNewPaymentSchedule(scheduleName);
-
+        try{
+            String scheduleName = scan.nextLine();
+            payroll.createNewPaymentSchedule(scheduleName);
+        }catch (Exception e){
+            System.out.println("The format of the value you entered is invalid. Try the menu below once again:");
+        }
         return payroll;
     }
 
