@@ -301,14 +301,17 @@ public class Payroll implements PayrollConstants{
         return true;
     }
 
-    public void runPayrol(int day){
-        for (Employee employee : payrollList){
+    /*public void runPayrol(int day){
+        for (PaymentSchedule paymentSchedule : paymentSchedulesList){
+            for (int i = 0; i < paymentSchedule.getDaysOfPayment().size(); i++){
+                if(paymentSchedule.getDaysOfPayment().get(i) == day){
 
-
+                }
+            }
         }
 
 
-    }
+    }*/
 
     /*--------------------------------------------------------------------------------------------*/
 
@@ -320,7 +323,8 @@ public class Payroll implements PayrollConstants{
 
     public void printListOfPaymentSchedules(){
         for(PaymentSchedule paymentSchedule : paymentSchedulesList){
-            System.out.println(paymentSchedule.getScheduleName());
+            System.out.println("Schedule's name:" + paymentSchedule.getScheduleName());
+            System.out.println("Dates of payment within the month of March:" + paymentSchedule.getDaysOfPayment());
         }
     }
 }

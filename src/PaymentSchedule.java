@@ -16,6 +16,10 @@ public class PaymentSchedule  {
         setDaysOfPayment(scheduleName);
     }
 
+    public ArrayList<Integer> getDaysOfPayment() {
+        return daysOfPayment;
+    }
+
     public void setDaysOfPayment(String scheduleName){
 
         String[] splitScheduleName = scheduleName.split(" ");

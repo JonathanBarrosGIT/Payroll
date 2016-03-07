@@ -325,17 +325,16 @@ public class Menu implements PayrollConstants {
     }
 
     private void runPayroll(Payroll payroll){
-        System.out.println("Enter the day you want to run the payroll:");
-        int day = Integer.parseInt(scan.next());
-        scan.nextLine();
+        //System.out.println("Enter the day you want to run the payroll:");
+        //int day = Integer.parseInt(scan.next());
+        //scan.nextLine();
 
-        payroll.runPayrol(day);
+        //payroll.runPayrol(day);
     }
 
     public void runMenu(Payroll payroll) {
 
         boolean menuLoop = true;
-        //PaymentSchedule p = new PaymentSchedule("mensal 1");
 
         while (menuLoop) {
             try {
@@ -378,12 +377,8 @@ public class Menu implements PayrollConstants {
                         payroll = changeEmployeeDetailsMenu(payroll);
                         break;
                     case RUN_PAYROLL:
-                        runPayroll(payroll);
-                        //TODO
-                        //System.out.println(paymentSchedule.toString());
-                        //System.out.println(paymentSchedule1.toString());
-                        //System.out.println(paymentSchedule2.toString());
-                        //todo remember of entering the date to run the payroll in a different date
+                        //TODO Still need to finish this function:
+                        //runPayroll(payroll);
                         break;
                     case CREATE_NEW_PAYMENT_SCHEDULE:
                         payroll = createNewPaymentSchedule(payroll);
