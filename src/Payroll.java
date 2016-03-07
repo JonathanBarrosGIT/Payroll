@@ -61,7 +61,7 @@ public class Payroll implements PayrollConstants{
         for (Employee employee : payrollList){
             if(employee.getId() == ID){
                 if(employee instanceof CommissionedEmployee){
-                    ((CommissionedEmployee) employee).setTotalSalary(saleResult);
+                    ((CommissionedEmployee) employee).setSaleResults(Calendar.getInstance(), saleResult);
                     System.out.println("Sale Result registered successfully!");
                     return true;
 

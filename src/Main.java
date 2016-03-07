@@ -17,18 +17,17 @@ public class Main {
         System.out.println("If you would like to proceed to the main menu, please type: Start");
         System.out.println("Otherwise, type: Cancel");
 
-        String option = scan.nextLine();
+        String option = scan.nextLine().toLowerCase();
 
         while(true){
-            if(option.toLowerCase().equals("start")){
+            if(option.equals("start")){
                 menu.runMenu(payroll);
                 System.out.println("Thanks for using our system.");
                 System.exit(0);
             }else if(option.equals("cancel")){
-
                 System.exit(0);
             }
-            option = scan.nextLine();
+            option = scan.nextLine().toLowerCase();
         }
     }
 }

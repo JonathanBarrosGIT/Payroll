@@ -19,24 +19,35 @@ public class CommissionedEmployee extends Employee {
         this.monthlySalary = monthlySalary;
     }
 
+    public double getMonthlySalary() {
+        return monthlySalary;
+    }
+
     public double getCommissionPercentage() {
         return commissionPercentage;
     }
 
-    public void setTotalSalary(double saleResult){
+    /*public void setTotalSalary(double saleResult){
         if(saleResult < 0){
             System.out.println("Invalid Entry");
         }else{
             double comissionInDecimal = getCommissionPercentage() / 100;
             totalSalary += saleResult * comissionInDecimal;
         }
-    }
+    }*/
 
-   // public boolean setSaleResults(Calendar date, Double value){
+   public boolean setSaleResults(Calendar date, Double saleResult){
+       if(saleResult < 0){
+           System.out.println("Invalid Entry. You cannot enter a negative value.");
+           return false;
+       }else{
+           double comissionInDecimal = getCommissionPercentage() / 100;
 
-
-
-   // }
+           saleResults.put(date.get(Calendar.DAY_OF_MONTH), saleResult * comissionInDecimal);
+           System.out.println("Sale Result registered successfully!");
+           return true;
+       }
+   }
 
     @Override
     public String toString() {

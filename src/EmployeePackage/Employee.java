@@ -23,6 +23,7 @@ public class Employee {
     protected double totalSalary = 0;
 
     private int paymentMethod;
+    private String paymentSchedule;
 
     public Employee(String name, String address){
         this.name = name;
@@ -116,17 +117,25 @@ public class Employee {
         }
     }
 
-    @Override
-    public String toString() {
-        return "\n" + "Name: " + getName() + " | ID: " + getId() + " | Adress: " + getAddress() +
-                " | Total Salary: " + getTotalSalary() + " | Labor Union Subscription: " + (isLaborUnion() ? "Sim" : "Não");
-    }
-
     public int getPaymentMethod() {
         return paymentMethod;
     }
 
     public void setPaymentMethod(int paymentMethod) {
         this.paymentMethod = paymentMethod;
+    }
+
+    public String getPaymentSchedule() {
+        return paymentSchedule;
+    }
+
+    public void setPaymentSchedule(String paymentSchedule) {
+        this.paymentSchedule = paymentSchedule;
+    }
+
+    @Override
+    public String toString() {
+        return "\n" + "Name: " + getName() + " | ID: " + getId() + " | Adress: " + getAddress() +
+                " | Total Salary: " + getTotalSalary() + " | Labor Union Subscription: " + (isLaborUnion() ? "Sim" : "Não");
     }
 }
