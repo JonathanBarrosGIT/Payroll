@@ -114,7 +114,7 @@ public class Menu implements PayrollConstants {
                 } else {
                     System.out.println("Invalid Command!");
                 }
-            } catch (NumberFormatException | InputMismatchException e) {
+            } catch (Exception e) {
                 System.out.println("The format of the value you entered is invalid. Try the menu below once again:");
                 removeLoop = false;
             }

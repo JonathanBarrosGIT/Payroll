@@ -11,7 +11,7 @@ public class CommissionedEmployee extends Employee {
 
     private double monthlySalary;
     private double commissionPercentage;
-    HashMap<Integer, Double> saleResults = new HashMap<>();
+    HashMap<Calendar, Double> saleResults = new HashMap<>();
 
     public CommissionedEmployee(String name, String address, double monthlySalary, double commissionPercentage) {
         super(name, address);
@@ -32,18 +32,24 @@ public class CommissionedEmployee extends Employee {
            System.out.println("Invalid Entry. You cannot enter a negative value.");
            return false;
        }else{
-           double comissionInDecimal = getCommissionPercentage() / 100;
 
-           saleResults.put(date.get(Calendar.DAY_OF_MONTH), saleResult * comissionInDecimal);
-           totalSalary += saleResult * comissionInDecimal;
+           saleResults.put(date, saleResult * (getCommissionPercentage() / 100));
+           //totalSalary += saleResult * comissionInDecimal;
            System.out.println("Sale Result registered successfully!");
            return true;
        }
    }
 
+    public HashMap<Calendar, Double> getSaleResults() {
+        return saleResults;
+    }
+
     @Override
     public String toString() {
-        return super.toString() + " \n Comission: " + getCommissionPercentage() + "%" + "\n" +
+        return super.toString() +
+                "\n Comission Percentage: " +
+                getCommissionPercentage() + "%" +
+                "\n" +
                 "=====================================\n";
     }
 }
