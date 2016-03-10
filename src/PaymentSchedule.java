@@ -1,5 +1,5 @@
-import java.util.ArrayList;
-import java.util.Vector;
+import java.text.DateFormat;
+import java.util.*;
 
 /**
  * Created by JonathanBarros on 3/4/16.
@@ -7,63 +7,73 @@ import java.util.Vector;
  */
 public class PaymentSchedule  {
 
+    final String[] month = {"1","2","3","4","5","6","7","8","9","10","11","12"};
+
     private String scheduleName;
-    private ArrayList<Integer> daysOfPayment;
+    private ArrayList<String> daysOfPayment;
 
     public PaymentSchedule(String scheduleName){
         this.scheduleName = scheduleName;
         daysOfPayment = new ArrayList<>();
-        setDaysOfPayment(scheduleName);
+        setDaysOfPayment();
     }
 
-    public ArrayList<Integer> getDaysOfPayment() {
+    public ArrayList<String> getDaysOfPayment() {
         return daysOfPayment;
     }
 
-    public void setDaysOfPayment(String scheduleName){
+    public void addPaymentSchedule(String date){
+        daysOfPayment.add(date);
 
-        String[] splitScheduleName = scheduleName.split(" ");
+    }
 
-        if(splitScheduleName[0].equals("monthly")){
-            if(splitScheduleName[1].equals("$")){
-                daysOfPayment.add(31);
+    public void setMonthlyDaysOfPayment(String scheduleName){
+        String [] splitScheduleName = scheduleName.split(" ");
+
+        /* Beginning on the first day of 2016 */
+        GregorianCalendar calendar = new GregorianCalendar(2016, 0, 1);
+
+        if(splitScheduleName[1].equals("$")){
+            for(int i = 0; i < 12; i++){
+
+                switch (month[i]) {
+                    //In those months, the last business day is 29
+                    case "1":
+                    case "2":
+                    case "4":
+                    case "7":
+                        addPaymentSchedule("29" + "/" + month[i] + "/" + "2016");
+                        break;
+                    //In those months, the last business day is 30
+                    case "6":
+                    case "9":
+                    case "11":
+                    case "12":
+                        addPaymentSchedule("30" + "/" + month[i] + "/" + "2016");
+                        break;
+                    //In those months, the last business day is 31
+                    case "3":
+                    case "5":
+                    case "8":
+                    case "10":
+                        addPaymentSchedule("31" + "/" + month[i] + "/" + "2016");
+                        break;
+                }
             }
-            else{
-                daysOfPayment.add(Integer.parseInt(splitScheduleName[1]));
+
+        }else{
+            for(int i = 0; i < 12; i++){
+                addPaymentSchedule(splitScheduleName[1] + "/" + month[i] + "/" + "2016");
             }
         }
-        else if(splitScheduleName[0].equals("weekly")) {
-            int day = 1;
-            switch (splitScheduleName[2]){
-                case "monday":
-                    day = 7;
-                    break;
-                case "tuesday":
-                    day = 1;
-                    break;
-                case "wednesday":
-                    day = 2;
-                    break;
-                case "thursday":
-                    day = 3;
-                    break;
-                case "friday":
-                    day = 4;
-                    break;
-            }
+    }
 
-            if(Integer.parseInt(splitScheduleName[1]) == 1){
-                int weekAdditional = 0;
+    public void setDaysOfPayment(){
 
-                for(int i = (splitScheduleName[2].equals("friday") ? 1 : 0); i <= 4; i++){
-                    daysOfPayment.add(day + weekAdditional);
-                    weekAdditional += 7;
-                }
+        String[] splitScheduleName = getScheduleName().split(" ");
 
-            }else if(Integer.parseInt(splitScheduleName[1]) == 2){
-                daysOfPayment.add(day);
-                daysOfPayment.add(day + 14);
-            }
+        if(splitScheduleName[0].equals("monthly")){
+            setMonthlyDaysOfPayment(scheduleName);
         }
     }
 
@@ -71,10 +81,56 @@ public class PaymentSchedule  {
         return this.scheduleName;
     }
 
-    @Override
-    public String toString(){
-        return "\nSchedule Name: " + getScheduleName() + "\n" +
-                "Days of Payment: " + daysOfPayment;
+    public void printDaysOfPayment(){
+        for(String date : daysOfPayment){
+            System.out.println(date);
+        }
 
     }
+
+    /*public void setWeeklyDaysOfPayment(String scheduleName){
+        String [] splitScheduleName = scheduleName.split(" ");
+
+        int initialDay = 0;
+
+        switch (splitScheduleName[2]){
+            case "monday":
+                initialDay = 4;
+                break;
+            case "tuesday":
+                initialDay = 5;
+                break;
+            case "wednesday":
+                initialDay = 6;
+                break;
+            case "thursday":
+                initialDay = 7;
+                break;
+            case "friday":
+                initialDay = 1;
+                break;
+        }
+
+        if(splitScheduleName[1].equals("1")){
+            for(int i = 0; i < 12; i++){
+
+                switch(month[i]){
+                    case "1":
+
+
+                }
+            }
+        }
+    }*/
+
+
+
+
+
+    //@Override
+    /*public String toString(){
+        return "\nSchedule Name: " + getScheduleName() + "\n" +
+                "Days of Payment: " + "\n"  + printDaysOfPayment();
+
+    }*/
 }

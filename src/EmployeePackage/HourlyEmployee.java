@@ -9,7 +9,7 @@ import java.util.HashMap;
  */
 public class HourlyEmployee extends Employee {
 
-    private double hourlySalary;
+    private Double hourlySalary;
 
     /**
      * This HashMap is going to receive the following:
@@ -25,11 +25,13 @@ public class HourlyEmployee extends Employee {
 
     public void setTotalSalary(int timeCard) {
 
+        Double currentSalary = getScheduledSalary("31/3/2016");
+
         if (timeCard > 8) {
             int overtime = timeCard - 8;
-            totalSalary += (hourlySalary * 8 + (hourlySalary * 1.5 * overtime));
+            setScheduledSalary("31/3/2016",currentSalary + (hourlySalary * 8 + (hourlySalary * 1.5 * overtime)));
         } else {
-            totalSalary = hourlySalary * timeCard;
+            setScheduledSalary("31/3/2016",currentSalary + (hourlySalary * timeCard));
         }
     }
 
@@ -52,6 +54,12 @@ public class HourlyEmployee extends Employee {
                     + date.get(Calendar.YEAR) + " successfully!");
             setTotalSalary(timeCard);
             return true;
+        }
+    }
+
+    public void setSchedule(){
+        for(int i = 0; i < 12; i++){
+            setScheduledSalary(daysOfPayment.get(i), 0.0);
         }
     }
 

@@ -18,12 +18,15 @@ public class Employee {
     private boolean laborUnion = false;
     private int laborUnionID;
     private double laborUnionFee;
-    private double serviceFee;
+    private Double serviceFee;
 
     protected double totalSalary = 0;
 
+    private HashMap<String, Double> scheduledSalary = new HashMap<>();
+
     private String paymentMethod;
-    private String paymentSchedule;
+    private String paymentScheduleName;
+    protected ArrayList<String> daysOfPayment = new ArrayList<>();
 
     public Employee(String name, String address){
         this.name = name;
@@ -86,7 +89,9 @@ public class Employee {
 
     public boolean setServiceFee(double serviceFee) {
         if(isLaborUnion()){
+            Double currentSalary = getScheduledSalary("31/3/2016");
             this.serviceFee = serviceFee;
+            setScheduledSalary("31/3/2016", currentSalary - getServiceFee());
             System.out.println("Service fee registered successfully");
             return true;
         }else {
@@ -125,12 +130,12 @@ public class Employee {
         this.paymentMethod = paymentMethod;
     }
 
-    public String getPaymentSchedule() {
-        return paymentSchedule;
+    public String getPaymentScheduleName() {
+        return paymentScheduleName;
     }
 
-    public void setPaymentSchedule(String paymentSchedule) {
-        this.paymentSchedule = paymentSchedule;
+    public void setPaymentScheduleName(String paymentScheduleName) {
+        this.paymentScheduleName = paymentScheduleName;
     }
 
     public String printLaborUnion(){
@@ -142,7 +147,6 @@ public class Employee {
             return "\tSituation: Not subscribed";
     }
 
-
     @Override
     public String toString() {
         return "\n Name: " + getName() +
@@ -150,7 +154,20 @@ public class Employee {
                 "\n Adress: " + getAddress() +
                 "\n Labor Union Information:\n" + printLaborUnion() +
                 "\n Payment Method: " + (getPaymentMethod() != null ? getPaymentMethod() : "Not yet") +
-                "\n Payment Schedule: " + getPaymentSchedule();
+                "\n Payment Schedule: " + getPaymentScheduleName();
     }
+
+    public void setDaysOfPayment(ArrayList<String> daysOfPayment) {
+        this.daysOfPayment = daysOfPayment;
+    }
+
+    public Double getScheduledSalary(String date) {
+        return scheduledSalary.get(date);
+    }
+
+    public void setScheduledSalary(String date, Double salary) {
+        this.scheduledSalary.put(date, salary);
+    }
+
 }
 

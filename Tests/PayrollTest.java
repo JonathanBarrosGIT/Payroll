@@ -27,7 +27,7 @@ public class PayrollTest {
         //Employee employee1 = new CommissionedEmployee("Jonathan", "Rua B", 1000, 10);
         //Employee employee2 = new SalariedEmployee("Jonathan", "Rua C", 1000);
         payroll.addEmployee(employee);
-        //assertEquals(employee.getAddress(),"Rua A");
+        assertEquals(employee.getAddress(),"Rua a");
     }
 
     @Test

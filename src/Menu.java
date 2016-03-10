@@ -58,13 +58,11 @@ public class Menu implements PayrollConstants {
                         case HOURLY_EMPLOYEE:
                             System.out.println("Enter the hourly salary:");
                             employee = new HourlyEmployee(name, address, scan.nextDouble());
-                            employee.setPaymentSchedule("weekly 1 friday");
                             System.out.println("The employee " + name + " was added successfully!");
                             break;
                         case SALARIED_EMPLOYEE:
                             System.out.println("Enter the monthly salary:");
                             employee = new SalariedEmployee(name, address, scan.nextDouble());
-                            employee.setPaymentSchedule("monthly $");
                             System.out.println("The employee " + name + " was added successfully!");
                             break;
                         case COMMISSIONED_EMPLOYEE:
@@ -72,7 +70,6 @@ public class Menu implements PayrollConstants {
                             double salary = scan.nextDouble();
                             System.out.println("For Commissioned Employee, please enter the commssion:");
                             employee = new CommissionedEmployee(name, address, salary, scan.nextDouble());
-                            employee.setPaymentSchedule("weekly 2 friday");
                             System.out.println("The employee " + name + " was added successfully!");
                             break;
                     }
@@ -314,7 +311,7 @@ public class Menu implements PayrollConstants {
     private Payroll createNewPaymentSchedule(Payroll payroll){
 
         System.out.println("Some examples of payment schedules:");
-        System.out.println("- weekly 1 thursday for payment every week on thursdays");
+        System.out.println("- monthly $ for payment on the last business day of each month");
         System.out.println("- monthly 10 for payment every month in the day 10");
         System.out.println("Now, enter your the payment schedule name:");
 
@@ -332,7 +329,7 @@ public class Menu implements PayrollConstants {
         //int day = Integer.parseInt(scan.next());
         //scan.nextLine();
 
-        //payroll.runPayrol(day);
+        payroll.runPayrol();
     }
 
     public void runMenu(Payroll payroll) {
@@ -380,8 +377,7 @@ public class Menu implements PayrollConstants {
                         payroll = changeEmployeeDetailsMenu(payroll);
                         break;
                     case RUN_PAYROLL:
-                        //TODO Still need to finish this function:
-                        //runPayroll(payroll);
+                        runPayroll(payroll);
                         break;
                     case CREATE_NEW_PAYMENT_SCHEDULE:
                         payroll = createNewPaymentSchedule(payroll);

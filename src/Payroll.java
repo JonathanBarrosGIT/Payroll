@@ -3,6 +3,7 @@ import EmployeePackage.HourlyEmployee;
 import EmployeePackage.CommissionedEmployee;
 import EmployeePackage.SalariedEmployee;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.function.Function;
 
@@ -22,12 +23,21 @@ public class Payroll implements PayrollConstants{
         payrollList = new ArrayList<>();
 
         paymentSchedulesList = new ArrayList<>();
-        paymentSchedulesList.add(new PaymentSchedule("monthly 4"));
         paymentSchedulesList.add(new PaymentSchedule("monthly $"));
-        paymentSchedulesList.add(new PaymentSchedule("weekly 1 wednesday"));
     }
 
     public void addEmployee(Employee employee){
+        employee.setPaymentScheduleName(paymentSchedulesList.get(0).getScheduleName());
+        employee.setDaysOfPayment(paymentSchedulesList.get(0).getDaysOfPayment());
+
+        if(employee instanceof SalariedEmployee){
+            ((SalariedEmployee)employee).setSchedule();
+        }else if(employee instanceof CommissionedEmployee){
+            ((CommissionedEmployee) employee).setSchedule();
+        }else{
+            ((HourlyEmployee) employee).setSchedule();
+        }
+
         payrollList.add(employee);
     }
 
@@ -68,10 +78,7 @@ public class Payroll implements PayrollConstants{
         for (Employee employee : payrollList){
             if(employee.getId() == ID){
                 if(employee instanceof CommissionedEmployee){
-                    ((CommissionedEmployee) employee).setSaleResults(Calendar.getInstance(), saleResult);
-                    System.out.println("Sale Result registered successfully!");
-                    return true;
-
+                    return ((CommissionedEmployee) employee).setSaleResults(saleResult);
                 } else{
                     System.out.println("The employee you entered is not a commissioned employee");
                     return false;
@@ -141,12 +148,12 @@ public class Payroll implements PayrollConstants{
     }
 
     public boolean changeLaborUnionID(int ID, int laborUnionID){
-        // First of all, it checks if the entered ID is either already taken or not:
+        // First of all, it checks if the entered ID is whether already taken or not:
         if(sameLaborUnionId(laborUnionID))
             return false;
         else{
             for(Employee employee : payrollList){
-                if(employee.getLaborUnionID() == ID){
+                if(employee.getId() == ID){
                     return employee.setLaborUnionID(laborUnionID);
                 }
             }
@@ -301,17 +308,22 @@ public class Payroll implements PayrollConstants{
         return true;
     }
 
-    /*public void runPayrol(int day){
-        for (PaymentSchedule paymentSchedule : paymentSchedulesList){
-            for (int i = 0; i < paymentSchedule.getDaysOfPayment().size(); i++){
-                if(paymentSchedule.getDaysOfPayment().get(i) == day){
+    public void runPayrol(){
 
-                }
-            }
+        Date date = new Date();
+        SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/mm/yyyy");
+        String dateStr = dateFormatter.format(date);
+
+        //TODO As an example, I am running the following day on the payment schedule:
+
+        for(Employee employee : payrollList){
+            System.out.print("Employee's name: ");
+            System.out.println(employee.getName());
+            System.out.println("Payment Method: " + (employee.getPaymentMethod() != null ? employee.getPaymentMethod() : "Not selected yet!"));
+            System.out.print("Net Salary: ");
+            System.out.println(employee.getScheduledSalary("31/3/2016"));
         }
-
-
-    }*/
+    }
 
     /*--------------------------------------------------------------------------------------------*/
 
@@ -323,8 +335,9 @@ public class Payroll implements PayrollConstants{
 
     public void printListOfPaymentSchedules(){
         for(PaymentSchedule paymentSchedule : paymentSchedulesList){
-            System.out.println("Schedule's name:" + paymentSchedule.getScheduleName());
-            System.out.println("Dates of payment within the month of March:" + paymentSchedule.getDaysOfPayment());
+            System.out.println("Schedule's name: " + paymentSchedule.getScheduleName());
+            paymentSchedule.printDaysOfPayment();
+            System.out.println("\n");
         }
     }
 }
